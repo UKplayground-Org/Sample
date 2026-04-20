@@ -47,7 +47,7 @@ app.get('/debug/config', (req, res) => {
 
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
-  console.log(`CloudSync API running on port ${PORT}`)
+  console.log(`CloudSync API running on port ${PORT} — Twilio+PagerDuty alerting enabled`)
 })
 
 module.exports = app
