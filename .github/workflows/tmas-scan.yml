@@ -1,0 +1,67 @@
+name: Security Scan (TMAS)
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Run daily at 02:00 UTC
+    - cron: '0 2 * * *'
+
+jobs:
+  tmas-source-scan:
+    name: TMAS Source Code Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run TMAS Scan
+        uses: trendmicro/tmas-scan-action@v1
+        with:
+          api-key: ${{ secrets.TMAS_API_KEY }}
+          region: us-east-1
+          scan-type: source
+          path: .
+          output-format: json
+          output-file: tmas-results.json
+          fail-on-findings: false
+
+      - name: Upload scan results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: tmas-scan-results
+          path: tmas-results.json
+
+  tmas-image-scan:
+    name: TMAS Container Image Scan
+    runs-on: ubuntu-latest
+    needs: []
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: docker build -t cloudsync:scan-${{ github.sha }} .
+
+      - name: Run TMAS Image Scan
+        uses: trendmicro/tmas-scan-action@v1
+        with:
+          api-key: ${{ secrets.TMAS_API_KEY }}
+          region: us-east-1
+          scan-type: image
+          image: cloudsync:scan-${{ github.sha }}
+          output-format: json
+          output-file: tmas-image-results.json
+          fail-on-findings: false
+
+      - name: Upload image scan results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: tmas-image-scan-results
+          path: tmas-image-results.json

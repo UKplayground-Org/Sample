@@ -1,0 +1,14 @@
+node_modules/
+*.log
+dist/
+coverage/
+.DS_Store
+*.pyc
+__pycache__/
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+
+# Intentionally NOT ignoring .env for this test repo
+# .env

@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git --version)",
+      "Bash(gh --version)",
+      "Bash(git init *)",
+      "Bash(git remote *)",
+      "Bash(git pull *)",
+      "Bash(curl -s -H \"Authorization: token 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\" https://api.github.com/user)",
+      "Bash(curl -s -H \"Authorization: token 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\" https://api.github.com/repos/Ukplayground/Sample)",
+      "Bash(GIT_ASKPASS=/bin/true git -C /Users/dominiclisi/Github-Sample pull https://Ukplayground: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@github.com/Ukplayground/Sample.git main)",
+      "Bash(git -C /Users/dominiclisi/Github-Sample pull https://Ukplayground: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@github.com/Ukplayground/Sample.git main)",
+      "Bash(git -C /Users/dominiclisi/Github-Sample ls-remote https://Ukplayground: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@github.com/Ukplayground/Sample.git)",
+      "WebFetch(domain:docs.trendmicro.com)",
+      "mcp__trendgpt__query_trendgpt",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "mcp__Claude_in_Chrome__navigate",
+      "mcp__Claude_in_Chrome__get_page_text",
+      "mcp__Claude_in_Chrome__computer",
+      "Bash(git config *)",
+      "Bash(git add *)"
+    ]
+  }
+}

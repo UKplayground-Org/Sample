@@ -1,0 +1,98 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: CloudSync Platform Infrastructure
+
+Parameters:
+  Environment:
+    Type: String
+    Default: production
+
+Resources:
+
+  # S3 bucket — public, no versioning, no logging
+  ArchiveBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: cloudsync-prod-archive-cf
+      AccessControl: PublicRead
+      VersioningConfiguration:
+        Status: Suspended
+
+  ArchiveBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref ArchiveBucket
+      PolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal: "*"
+            Action: "s3:GetObject"
+            Resource: !Sub "arn:aws:s3:::cloudsync-prod-archive-cf/*"
+
+  # RDS — unencrypted, publicly accessible, no backup
+  Database:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceIdentifier: cloudsync-prod-cf
+      DBInstanceClass: db.t3.medium
+      Engine: postgres
+      EngineVersion: "13.4"
+      MasterUsername: admin
+      MasterUserPassword: Sup3rS3cr3tP@ssw0rd!
+      DBName: cloudsync_prod
+      AllocatedStorage: "100"
+      PubliclyAccessible: true
+      StorageEncrypted: false
+      DeletionPolicy: Delete
+      BackupRetentionPeriod: 0
+      MultiAZ: false
+
+  # IAM user with access keys in template — worst practice
+  DeployUser:
+    Type: AWS::IAM::User
+    Properties:
+      UserName: cloudsync-deploy
+
+  DeployUserAccessKey:
+    Type: AWS::IAM::AccessKey
+    Properties:
+      UserName: !Ref DeployUser
+
+  DeployUserPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: cloudsync-deploy-policy
+      Users:
+        - !Ref DeployUser
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action: "*"
+            Resource: "*"
+
+  # Security group — wide open
+  ApiSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: CloudSync API Security Group
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 5432
+          ToPort: 5432
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: "-1"
+          CidrIp: 0.0.0.0/0
+
+Outputs:
+  BucketName:
+    Value: !Ref ArchiveBucket
+  DatabaseEndpoint:
+    Value: !GetAtt Database.Endpoint.Address
+  AccessKeyId:
+    Value: !Ref DeployUserAccessKey
+  SecretAccessKey:
+    Value: !GetAtt DeployUserAccessKey.SecretAccessKey
