@@ -34,6 +34,7 @@ jobs:
           secretsScan: true
           tmasApiKey: ${{ secrets.TMAS_API_KEY }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+          additionalArgs: --region=us-east-1
 
   tmas-image-scan:
     name: TMAS Container Image Scan
@@ -55,3 +56,4 @@ jobs:
           malwareScan: true
           tmasApiKey: ${{ secrets.TMAS_API_KEY }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+          additionalArgs: --region=us-east-1
