@@ -8,6 +8,15 @@ on:
   schedule:
     - cron: '0 2 * * *'
 
+# Required for TMAS to post scan comments and query pull requests
+permissions:
+  contents: read
+  pull-requests: write
+  security-events: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   tmas-source-scan:
     name: TMAS Source Code Scan
