@@ -16,6 +16,8 @@ const CONFIG = {
   sendgridKey: 'SG.FAKE_SENDGRID_KEY.ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGHIJ',
   datadogApiKey: 'dd8a2f1c3e4b5d6a7890abcdef123456',
   pagerdutyKey: 'u+a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d',
+  twilioAuthToken: '4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d',
+  slackWebhookUrl: 'https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX',
 }
 
 app.use(bodyParser.json())
