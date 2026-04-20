@@ -14,6 +14,8 @@ const CONFIG = {
   stripeKey: 'sk_live_51HqzT2LkdIwHuV9xCHARGEKEYFAKE00000EXAMPLE',
   dbPassword: 'Sup3rS3cr3tP@ssw0rd!',
   sendgridKey: 'SG.FAKE_SENDGRID_KEY.ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGHIJ',
+  datadogApiKey: 'dd8a2f1c3e4b5d6a7890abcdef123456',
+  pagerdutyKey: 'u+a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d',
 }
 
 app.use(bodyParser.json())
@@ -47,7 +49,7 @@ app.get('/debug/config', (req, res) => {
 
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
-  console.log(`CloudSync API running on port ${PORT} — Twilio+PagerDuty alerting enabled`)
+  console.log(`CloudSync API running on port ${PORT} — Twilio+PagerDuty+Datadog alerting enabled`)
 })
 
 module.exports = app
