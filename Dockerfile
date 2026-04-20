@@ -2,14 +2,11 @@ FROM node:14-alpine
 
 WORKDIR /app
 
-# Copy dependency files
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm install --only=production
 
-# Copy source
 COPY src/ ./src/
 
-# Embed secrets as ENV (bad practice for scanner to find)
 ENV AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
 ENV AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 ENV JWT_SECRET=my_super_secret_jwt_key_dont_share_this_ever_please
