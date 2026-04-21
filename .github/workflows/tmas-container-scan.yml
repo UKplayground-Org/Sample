@@ -1,0 +1,58 @@
+name: TMAS Container Scan
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 3 * * *'
+
+# packages: write — needed to push image to GitHub Container Registry (GHCR)
+permissions:
+  contents: read
+  pull-requests: write
+  packages: write
+  security-events: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  tmas-container-scan:
+    name: TMAS Container Registry Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # GHCR requires lowercase image names — github.repository may have uppercase
+      - name: Set image name
+        id: image
+        run: |
+          echo "name=ghcr.io/$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]'):${{ github.sha }}" >> $GITHUB_OUTPUT
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Docker image
+        run: docker build -t ${{ steps.image.outputs.name }} .
+
+      - name: Push to GitHub Container Registry
+        run: docker push ${{ steps.image.outputs.name }}
+
+      - name: Run TMAS Container Registry Scan
+        uses: trendmicro/tmas-scan-action@v3.1.3
+        with:
+          artifact: registry:${{ steps.image.outputs.name }}
+          vulnerabilitiesScan: true
+          secretsScan: true
+          malwareScan: true
+          tmasApiKey: ${{ secrets.TMAS_API_KEY }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          additionalArgs: --region=us-east-1
