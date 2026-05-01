@@ -1,37 +1,21 @@
 name: Security Scan (TMAS)
 
-
 on:
   push:
-    branches: ['**']
+    branches: ['**']              # Run on push to ALL branches
   pull_request:
-    branches: [main]
+    branches: [main]            # Run before merging a pull request
   schedule:
-    - cron: '0 2 * * *'→ Runs at 02:00
-
-
-
-# Required for TMAS to post scan comments and query pull requests
-permissions:
-  contents: read
-  pull-requests: write
-  security-events: write
-
-
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
+    - cron: '0 2 * * *'        # Also run daily at 02:00 UTC
 
 jobs:
   tmas-source-scan:
     name: TMAS Source Code Scan
     runs-on: ubuntu-latest
 
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
-
 
       - name: Run TMAS Source Scan
         uses: trendmicro/tmas-scan-action@v3.1.3
@@ -39,6 +23,28 @@ jobs:
           artifact: dir:.
           vulnerabilitiesScan: true
           secretsScan: true
+          tmasApiKey: ${{ secrets.TMAS_API_KEY }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          additionalArgs: --region=us-east-1
+
+  tmas-image-scan:
+    name: TMAS Container Image Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Build Docker image
+        run: docker build -t myapp:scan-${{ github.sha }} .
+
+      - name: Run TMAS Image Scan
+        uses: trendmicro/tmas-scan-action@v3.1.3
+        with:
+          artifact: docker:myapp:scan-${{ github.sha }}
+          vulnerabilitiesScan: true
+          secretsScan: true
           malwareScan: true
           tmasApiKey: ${{ secrets.TMAS_API_KEY }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+          additionalArgs: --region=us-east-1 # set your region   
