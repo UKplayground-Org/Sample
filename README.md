@@ -2,7 +2,7 @@
 
 > Internal data synchronisation and webhook delivery platform for enterprise integrations.
 
-[![CI](https://github.com/Ukplayground/Sample/actions/workflows/ci.yml/badge.svg)](https://github.com/Ukplayground/Sample/actions/workflows/ci.yml)
+[![CI](https://github.com/Ukplayground/Sample/actions/workflows/tmas-container-scan.yml/badge.svg)](https://github.com/Ukplayground/Sample/actions/workflows/tmas-container-scan.yml)
 [![Security Scan](https://github.com/Ukplayground/Sample/actions/workflows/tmas-scan.yml/badge.svg)](https://github.com/Ukplayground/Sample/actions/workflows/tmas-scan.yml)
 
 ---
