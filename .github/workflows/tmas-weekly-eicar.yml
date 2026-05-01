@@ -18,7 +18,7 @@ jobs:
       - name: Create EICAR test file
         run: |
           printf '%s%s\n' 'X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-' 'FILE!$H+H*' > eicar_test.txt
-          echo "Created eicar_test.txt"
+          echo "Created eicar_test.com"
 
       - name: Commit and push EICAR file
         run: |
