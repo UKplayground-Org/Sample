@@ -1,12 +1,9 @@
 name: Weekly EICAR Commit Test
 
-
 on:
   schedule:
-    - cron: '0 9 * * 1'→ Runs at 09:00, only on Monday
-
+    - cron: '0 9 * * 1'
   workflow_dispatch:
-
 
 jobs:
   commit-eicar:
@@ -18,18 +15,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-
       - name: Create EICAR test file
         run: |
           printf '%s%s\n' 'X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-' 'FILE!$H+H*' > eicar_test.com
           echo "Created eicar_test.com"
-
 
       - name: Commit and push EICAR file
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add eicar_test.com
-          git commit -m "test: add EICAR test file for TMAS malware scan validation"
+          git commit -m "test: add EICAR test file for TMAS malware scan validation" || echo "Nothing to commit"
           git push
-
