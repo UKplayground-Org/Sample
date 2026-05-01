@@ -19,7 +19,7 @@ jobs:
           echo "EICAR test file created on runner only - never committed to repo"
 
       - name: Scan with TMAS - expect malware detection
-        uses: trendmicro/tmas-scan-action@v2
+        uses: trendmicro/tmas-scan-action@v3.1.3
         with:
           version: '2'
           vulnerabilitiesScan: false
