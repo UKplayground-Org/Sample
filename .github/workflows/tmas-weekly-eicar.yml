@@ -15,10 +15,14 @@ jobs:
           printf '%s%s\n' 'X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-' 'FILE!$H+H*' > eicar_test.com
           echo "Created eicar_test.com on runner (not committed to repo)"
 
-      - name: Build minimal Docker image containing EICAR
+      - name: Build Docker image containing EICAR
         run: |
-          printf 'FROM scratch\nCOPY eicar_test.com /eicar_test.com\n' > Dockerfile.eicar
+          cat > Dockerfile.eicar << 'EOF'
+          FROM alpine:latest
+          COPY eicar_test.com /eicar_test.com
+          EOF
           docker build -f Dockerfile.eicar -t eicar-test:latest .
+          docker images eicar-test:latest
           echo "Built eicar-test:latest image"
 
       - name: Scan EICAR image with TMAS malware detection
