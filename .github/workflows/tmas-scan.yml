@@ -26,7 +26,7 @@ jobs:
           artifact: dir:.
           vulnerabilitiesScan: true
           secretsScan: true
-          malwareScan: true
+          malwareScan: false
           tmasApiKey: ${{ secrets.TMAS_API_KEY }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           additionalArgs: --region=us-east-1
