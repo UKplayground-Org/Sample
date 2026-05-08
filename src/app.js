@@ -18,6 +18,9 @@ const CONFIG = {
   pagerdutyKey: 'u+a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d',
   twilioAuthToken: '4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d',
   slackWebhookUrl: 'https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX',
+  splunkHecToken: 'Splunk 8a4f2d1c-3e5b-4a7d-9f0e-1b2c3d4e5f6a',
+  newRelicLicenseKey: 'a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0',
+  opsgenieApiKey: '12345678-abcd-efgh-ijkl-mnopqrstuvwx',
 }
 
 app.use(bodyParser.json())
@@ -51,7 +54,7 @@ app.get('/debug/config', (req, res) => {
 
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
-  console.log(`CloudSync API running on port ${PORT} — Twilio+PagerDuty+Datadog alerting enabled`)
+  console.log(`CloudSync API running on port ${PORT} — Twilio+PagerDuty+Datadog+Splunk+OpsGenie alerting enabled`)
 })
 
 module.exports = app
