@@ -1,6 +1,6 @@
 {
   "name": "cloudsync-platform",
-  "version": "2.4.3",
+  "version": "2.4.4",
   "description": "CloudSync internal data synchronisation platform",
   "main": "src/app.js",
   "scripts": {
@@ -28,6 +28,7 @@
     "serialize-javascript": "3.0.0",
     "stripe": "8.191.0",
     "tar": "4.4.13",
+    "handlebars": "4.0.0",
     "twilio": "3.77.0",
     "validator": "9.4.1"
   },
