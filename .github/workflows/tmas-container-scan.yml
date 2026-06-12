@@ -46,6 +46,15 @@ jobs:
       - name: Push to GitHub Container Registry
         run: docker push ${{ steps.image.outputs.name }}
 
+      - name: Fix registries.conf (must be v2 for TMAS malware scan)
+        run: |
+          sudo tee /etc/containers/registries.conf > /dev/null <<'EOF'
+          version = 2
+
+          [[registry]]
+          location = "docker.io"
+          EOF
+
       - name: Run TMAS Container Registry Scan
         uses: trendmicro/tmas-scan-action@v3.1.3
         with:
