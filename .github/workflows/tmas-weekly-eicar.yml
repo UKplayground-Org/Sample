@@ -5,6 +5,9 @@ on:
     - cron: '0 9 * * 1'
   workflow_dispatch:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   eicar-image-scan:
     name: EICAR Malware Detection via Container Scan
@@ -38,6 +41,15 @@ jobs:
 
       - name: Push EICAR image to ghcr.io
         run: docker push ${{ env.IMAGE_TAG }}
+
+      - name: Fix registries.conf (must be v2 for TMAS malware scan)
+        run: |
+          sudo tee /etc/containers/registries.conf > /dev/null <<'EOF'
+          version = 2
+
+          [[registry]]
+          location = "docker.io"
+          EOF
 
       - name: Scan EICAR image with TMAS malware detection
         uses: trendmicro/tmas-scan-action@v3.1.3
