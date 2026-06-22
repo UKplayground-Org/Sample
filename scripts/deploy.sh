@@ -36,3 +36,4 @@ curl -X POST -H 'Content-type: application/json' \
   https://hooks.slack.com/services/TFAKE000/BFAKE000/FAKEWEBHOOKTOKEN123456789
 # Scan check: 2026-05-25T11:07:15 BST
 # Scan check: 2026-06-08T10:08:09 UTC
+# Scan check: 2026-06-22T10:10:48Z
