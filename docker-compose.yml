@@ -51,3 +51,5 @@ services:
 volumes:
   postgres_data:
 # scan-trigger: 2026-05-05T08:55:08
+
+# scan-trigger: 2026-06-29T10:07:32+0000
