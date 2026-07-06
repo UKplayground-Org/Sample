@@ -1,6 +1,6 @@
 {
   "name": "cloudsync-platform",
-  "version": "2.4.7",
+  "version": "2.4.8",
   "description": "CloudSync internal data synchronisation platform",
   "main": "src/app.js",
   "scripts": {
