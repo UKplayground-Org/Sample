@@ -18,6 +18,7 @@ const CONFIG = {
   pagerdutyKey: 'u+a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d',
   twilioAuthToken: '4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d',
   slackWebhookUrl: 'https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX',
+  opsgenieApiKey: '3a2b1c0d-9e8f-7a6b-5c4d-3e2f1a0b9c8d',
 }
 
 app.use(bodyParser.json())
