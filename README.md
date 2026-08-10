@@ -151,4 +151,4 @@ To report a security vulnerability, contact: security@cloudsync.io
 
 Internal use only — © CloudSync Ltd.
 # Last updated: Mon Aug 03 11:14:29 BST 2026
-# Scan trigger: Mon Jul 27 11:06:34 BST 2026
+# Scan trigger: Mon Aug 10 10:28:22 BST 2026
