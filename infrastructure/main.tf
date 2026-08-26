@@ -69,6 +69,14 @@ resource "aws_security_group" "api" {
     description = "Redis from anywhere"
   }
 
+  ingress {
+    from_port   = 27017
+    to_port     = 27017
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "MongoDB from anywhere"
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
